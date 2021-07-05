@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="SqlDialectMappings">
+    <file url="file://$PROJECT_DIR$/src/main/java/com/founder/bigdata/compute/demo/controller/FlinkDemoController.java" dialect="MySQL" />
+    <file url="file://$PROJECT_DIR$/src/main/java/com/founder/bigdata/compute/demo/service/impl/TestFlinkImpl.java" dialect="MySQL" />
+    <file url="file://$PROJECT_DIR$/src/main/java/com/founder/bigdata/compute/demo/utils/MySQLSource.java" dialect="MySQL" />
+    <file url="file://$PROJECT_DIR$/src/test/java/com/founder/bigdata/compute/demo/DemoApplicationTests.java" dialect="MySQL" />
+  </component>
+</project>
