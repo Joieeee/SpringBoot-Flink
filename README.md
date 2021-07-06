@@ -207,7 +207,7 @@ spring.datasource.username=root
 spring.datasource.password=123456
 spring.datasource.driver-class-name=com.mysql.jdbc.Driver
 #数据库地址
-spring.datasource.url=jdbc:mysql://192.168.88.161:3306/flink_test?useUnicode=true&characterEncoding=utf-8&useSSL=false
+spring.datasource.url=jdbc:mysql://localhost:3306/db01?useUnicode=true&characterEncoding=utf-8&useSSL=false
 #文件最大大小
 spring.servlet.multipart.max-file-size=10MB
 #日志路径
