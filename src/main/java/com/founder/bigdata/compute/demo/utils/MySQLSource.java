@@ -33,7 +33,7 @@ public class MySQLSource extends RichParallelSourceFunction<Student> {
     @Override
     public void open(Configuration parameters) throws Exception {
         //加载驱动,开启连接
-        conn = DriverManager.getConnection("jdbc:mysql://192.168.88.161:3306/flink_test", "root", "123456");
+        conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/db01", "root", "123456");
         String sql = "select id,name,age from `t_student`";
         ps = conn.prepareStatement(sql);
     }
@@ -44,7 +44,7 @@ public class MySQLSource extends RichParallelSourceFunction<Student> {
     public void run(SourceContext ctx) throws Exception {
         ResultSet resultSet = ps.executeQuery();
         while (resultSet.next()) {
-            int id = resultSet.getInt("id");
+            String id = resultSet.getString("id");
             String name = resultSet.getString("name");
             int age = resultSet.getInt("age");
             //封装数据到student集合中

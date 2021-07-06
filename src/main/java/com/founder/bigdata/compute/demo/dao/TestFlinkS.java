@@ -12,5 +12,5 @@ public interface TestFlinkS {
     /**
      * 测试接口
      */
-    void test ();
+    void test () throws Exception;
 }

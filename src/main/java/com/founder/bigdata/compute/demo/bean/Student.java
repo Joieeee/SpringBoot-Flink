@@ -20,7 +20,7 @@ import org.springframework.stereotype.Component;
 @NoArgsConstructor
 @AllArgsConstructor
 public class Student {
-    private Integer id;
+    private String id;
     private String name;
     private Integer age;
 }

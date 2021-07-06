@@ -24,6 +24,6 @@ public class FlinkDemoController {
 
         testFlink.test();
 
-        return "  >>>>>>>>>>>>>>>>>>>>>  ";
+        return "  这是一个Flink代码测试程序...  ";
     }
 }
