@@ -2,10 +2,8 @@ package com.founder.bigdata.compute.demo.service.impl;
 
 
 import com.founder.bigdata.compute.demo.bean.Student;
-import org.apache.flink.api.common.functions.RuntimeContext;
 import org.apache.flink.api.common.state.*;
 import org.apache.flink.api.common.time.Time;
-import org.apache.flink.api.common.typeinfo.TypeInformation;
 import org.apache.flink.api.java.tuple.Tuple2;
 import org.apache.flink.configuration.Configuration;
 import org.apache.flink.streaming.api.functions.ProcessFunction;
@@ -30,7 +28,7 @@ public class DataDistinct extends ProcessFunction<Student, Tuple2<String, Tuple2
     public void open(Configuration parameters) throws Exception {
         // 初始化状态，name是state
         StateTtlConfig ttlConfig = StateTtlConfig
-                //这是state存活时间10s
+                //设置state存活时间10s
                 .newBuilder(Time.seconds(10))
                 //设置过期时间更新方式
                 .setUpdateType(StateTtlConfig.UpdateType.OnReadAndWrite)
