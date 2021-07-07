@@ -45,7 +45,7 @@ public class DataDistinct extends ProcessFunction<Student, Tuple2<String, Tuple2
 
     /**
      * 去重操作输出
-     *
+     * 通过判断状态来实现去重
      * @param student 传入的数据类型
      * @param ctx     作为中间变量
      * @param out     输出类型

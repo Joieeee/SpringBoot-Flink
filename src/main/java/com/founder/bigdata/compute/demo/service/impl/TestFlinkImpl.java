@@ -24,13 +24,15 @@ public class TestFlinkImpl implements TestFlinkS {
     public void test() {
         System.out.println("=========  流程开始   >>>>>>>>>  演示Flink Job  <<<<<<<<<<<<<<   ========== ");
         //1.准备环境
-        StreamExecutionEnvironment env = StreamExecutionEnvironment.getExecutionEnvironment().setParallelism(1);
+        StreamExecutionEnvironment env = StreamExecutionEnvironment.getExecutionEnvironment();
+        env.setParallelism(1);
         //2.准备数据
         DataStream<Student> studentDataStreamSource = env.addSource(new MySQLSource());
         studentDataStreamSource.print();
 
         //3.数据处理转换(去重操作)
         SingleOutputStreamOperator<Tuple2<String, Tuple2<String, Integer>>> outputStreamOperator = studentDataStreamSource.keyBy(Student::getId).process(new DataDistinct());
+
         //4.输出结果
         outputStreamOperator.print();
         try {
