@@ -44,13 +44,18 @@ public class MySQLSource extends RichParallelSourceFunction<Student> {
 //        TimeUnit.SECONDS.sleep(5);
     }
 
-    //取消任务 执行cancel
+    /**
+     * 取消任务 执行cancel
+     */
     @Override
     public void cancel() {
 //        flag = false;
     }
 
-    //结束任务,关闭连接
+    /**
+     * 结束任务,关闭连接
+     * @throws Exception
+     */
     @Override
     public void close() throws Exception {
         if (conn != null) {
