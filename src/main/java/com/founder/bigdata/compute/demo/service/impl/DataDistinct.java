@@ -30,9 +30,9 @@ public class DataDistinct extends ProcessFunction<Student, Tuple2<String, Tuple2
         StateTtlConfig ttlConfig = StateTtlConfig
                 //设置state存活时间10s
                 .newBuilder(Time.seconds(10))
-                //设置过期时间更新方式
+                //设置过期时间更新方式(-- OnReadAndWrite -读取时也更新 ; -- onCreateAndWrite -仅在创建和写入时更新)
                 .setUpdateType(StateTtlConfig.UpdateType.OnReadAndWrite)
-                //永远不要返回过期的状态,过期的数据不能再被访问
+                //设置数据过期的状态,过期的数据不能再被访问(-- NeverReturnExpired -不返回过期数据 ; -- ReturnExpiredIfNotCleanedUp -会返回过期但未清理的数据)
                 .setStateVisibility(StateTtlConfig.StateVisibility.NeverReturnExpired)
                 //处理完1000个状态查询时候，会启用一次CompactFilter
                 .cleanupInRocksdbCompactFilter(1000)

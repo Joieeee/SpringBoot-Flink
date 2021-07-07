@@ -26,7 +26,6 @@ public class TestFlinkImpl implements TestFlinkS {
         //1.准备环境
         StreamExecutionEnvironment env = StreamExecutionEnvironment.getExecutionEnvironment().setParallelism(1);
         //2.准备数据
-//        DataStreamSource<String> dataStreamSource = env.fromElements("qqq", "aaa", "ee");
         DataStream<Student> studentDataStreamSource = env.addSource(new MySQLSource());
         studentDataStreamSource.print();
 
@@ -37,7 +36,6 @@ public class TestFlinkImpl implements TestFlinkS {
         try {
             //5.触发执行
             env.execute();
-
         } catch (Exception e) {
             System.out.println("Error executing flink job: " + e.getMessage());
         }
