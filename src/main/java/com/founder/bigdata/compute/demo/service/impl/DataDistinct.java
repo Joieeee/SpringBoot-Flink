@@ -4,7 +4,6 @@ package com.founder.bigdata.compute.demo.service.impl;
 import com.founder.bigdata.compute.demo.bean.Student;
 import org.apache.flink.api.common.state.*;
 import org.apache.flink.api.common.time.Time;
-import org.apache.flink.api.java.tuple.Tuple2;
 import org.apache.flink.configuration.Configuration;
 import org.apache.flink.streaming.api.functions.ProcessFunction;
 import org.apache.flink.util.Collector;
@@ -17,16 +16,17 @@ import org.apache.flink.util.Collector;
  * @author Guan 2021/07/06 9:21
  * @program demo
  */
-public class DataDistinct extends ProcessFunction<Student, Tuple2<String, Tuple2<String, Integer>>> {
+public class DataDistinct extends ProcessFunction<Student, String> {
 
     /**
      * 定义变量表示数据的状态
      */
     private ValueState<Boolean> existState;
+//    private ValueState<String> existState;
 
     @Override
     public void open(Configuration parameters) throws Exception {
-        // 初始化状态，name是state
+        // 初始化状态，name是dataState
         StateTtlConfig ttlConfig = StateTtlConfig
                 //设置state存活时间10s
                 .newBuilder(Time.seconds(10))
@@ -38,7 +38,8 @@ public class DataDistinct extends ProcessFunction<Student, Tuple2<String, Tuple2
                 .cleanupInRocksdbCompactFilter(1000)
                 .build();
 
-        ValueStateDescriptor<Boolean> existStateDesc = new ValueStateDescriptor<>("state", Boolean.class);
+        ValueStateDescriptor<Boolean> existStateDesc = new ValueStateDescriptor<>("dataState", Boolean.class);
+//        ValueStateDescriptor<String> existStateDesc = new ValueStateDescriptor<>("dataState", String.class);
         existStateDesc.enableTimeToLive(ttlConfig);
         existState = this.getRuntimeContext().getState(existStateDesc);
     }
@@ -46,18 +47,29 @@ public class DataDistinct extends ProcessFunction<Student, Tuple2<String, Tuple2
     /**
      * 去重操作输出
      * 通过判断状态来实现去重
+     *
      * @param student 传入的数据类型
      * @param ctx     作为中间变量
      * @param out     输出类型
      * @throws Exception
      */
     @Override
-    public void processElement(Student student, Context ctx, Collector<Tuple2<String, Tuple2<String, Integer>>> out) throws Exception {
+    public void processElement(Student student, Context ctx, Collector<String> out) throws Exception {
         //如果不存在则收集输出
         if (existState.value() == null) {
             existState.update(true);
-            out.collect(Tuple2.of(student.getId(), Tuple2.of(student.getName(), student.getAge())));
+            out.collect(student.getId() + ": \t(" + student.getName() + " , " + student.getAge() + ")");
         }
+
+        /*int i = 0;
+
+        if (existState.value() == null) {
+            existState.update(student.toString());
+            out.collect(student.getId() + ": \t(" + student.getName() + " , " + student.getAge() + ")");
+        } else if (existState.value().equals(student.toString())) {
+            i++;
+            System.out.println(student.toString() + "\t全字段重复" + i + "次");
+        }*/
     }
 
 
